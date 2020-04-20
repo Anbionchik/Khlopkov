@@ -456,10 +456,14 @@ body {
   font-family: Inter;
   font-style: normal;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 34px;
   line-height: 24px;
   color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
+
 
   .header__button-create-bundle .button-create-bundle_title {
     height: 24px;
@@ -471,7 +475,9 @@ body {
     color: #FFFFFF; }
 
 .header__button-create-bundle:hover {
-  background: #FD3A3A; }
+  background: #FD3A3A;
+}
+
 
 .relationship__table-data {
   grid-column: 1/5;
@@ -683,3 +689,7 @@ li {
   width: 260px;
   word-break: break-all;
   margin-left: 50px; }
+
+.is_done_text {
+  text-decoration: line-through;
+}
