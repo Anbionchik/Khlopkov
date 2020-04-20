@@ -5,7 +5,12 @@ data = {
     'lists': [
         {'name': 'Работа', 'is_done': True},
         {'name': 'Дом', 'is_done': False},
-        {'name': 'Учёбы', 'is_done': True}
+        {'name': 'Учёба', 'is_done': True},
+        {'name': 'Дела1', 'is_done': True},
+        {'name': 'Дела2', 'is_done': True},
+        {'name': 'Дела3', 'is_done': False},
+        {'name': 'Дела4', 'is_done': True},
+        {'name': 'Дела5', 'is_done': True},
     ],
     'user_name' : 'Admin',
 }
