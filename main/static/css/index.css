@@ -14,14 +14,14 @@ a {
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("../fonts//Inter/Inter.var.woff2") format("woff2"); }
+  src: url("../fonts/Inter/Inter.var.woff2") format("woff2"); }
 
 @font-face {
   font-family: 'Inter';
   font-style: normal;
   font-weight: normal;
   font-display: swap;
-  src: url("../fonts//Inter/Inter.var.woff2") format("woff2"); }
+  src: url("../fonts/Inter/Inter.var.woff2") format("woff2"); }
 
 /*Переменные и шаблоны**/
 .cash-office_header, .warehouse_header, .header_title, .schedule__header-row .header-row_title {
@@ -53,7 +53,7 @@ a {
   grid-row: 4/5;
   font-family: Inter;
   font-style: normal;
-  font-weight: 2oo;
+  font-weight: 200;
   font-size: 15px;
   line-height: 20px;
   color: #48555F; }
@@ -445,7 +445,7 @@ body {
 }
 
 .header__button-create-bundle {
-
+  grid-column-start: 3;
   align-self: center;
   text-align: center;
   vertical-align: middle;

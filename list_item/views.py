@@ -13,3 +13,6 @@ data = {
 def list_item_view(request):
     context = data
     return render(request, 'list.html', context)
+
+def edit_view(request, pk):
+    pass

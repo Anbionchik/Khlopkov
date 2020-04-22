@@ -121,6 +121,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+# min elements at the main and list pages
+MIN_ELEMENTS = 6
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
