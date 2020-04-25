@@ -10,7 +10,7 @@
 
     {% endblock %}
 
-    <link rel="shortcut icon" type="image/png" href="imges/favicon.png"/>
+    <link rel="shortcut icon" type="image/png" href="/main/static/images/favicon.png"/>
     <link rel="stylesheet" href="/static/css/index.css">
 </head>
 <body>
@@ -30,7 +30,7 @@
                     </svg>
                 </div>
                 <div class='user-profile__user-name'>
-                    <span>Анонимный пользователь</span>
+                    <span>{{ user }}</span>
                 </div>
                 <a class="user-profile_exit-button" href="/logout"><img src="/static/images/exit.svg" alt="exit"></a>
             </div>

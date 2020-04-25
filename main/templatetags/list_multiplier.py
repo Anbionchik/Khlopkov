@@ -4,7 +4,6 @@ from Khlopkov.settings import MIN_ELEMENTS
 register = template.Library()
 
 
-
 @register.filter()
 def list_multiplier(some_list):
     result_list = []
