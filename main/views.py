@@ -6,11 +6,15 @@ def main_view(request):
     """ Главная View """
     user = request.user
 
-    lists = ListModel.objects.filter(
-        user=user,
-    ).order_by(
-        'created'
-    )
+    try:
+        lists = ListModel.objects.filter(
+            user=user,
+        ).order_by(
+            'created'
+        )
+    except TypeError:
+        lists = []
+
     context = {
         'lists': lists,
         'user': request.user.username

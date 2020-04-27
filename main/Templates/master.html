@@ -9,8 +9,7 @@
     {% block title %}
 
     {% endblock %}
-
-    <link rel="shortcut icon" type="image/png" href="/main/static/images/favicon.png"/>
+    <link rel="shortcut icon" type="image/png" href="/main/static/images/favicon.ico">
     <link rel="stylesheet" href="/static/css/index.css">
 </head>
 <body>
@@ -42,7 +41,9 @@
 
         <div class="relationship__table-data">
             <div class="table-data__table-header">
-                <div class="table-data_table-header-item-1">TO DO List</div>
+                {% block header %}
+
+                {% endblock %}
                 <a class="add_new_list" href="/create/">
                      <div class="header__button-create-bundle">
                          <div class="plus_button">+</div>

@@ -1,18 +1,27 @@
 from django.shortcuts import render
+from main.models import ListModel
+from list_item.models import ListItemModel
 
 
-data = {
-    'lists': [
-        {'name': 'Купить шариков', 'is_done': True, 'date': ''},
-        {'name': 'Заказать торт', 'is_done': False, 'date': '01.02.03'},
-        {'name': 'Разослать приглашения', 'is_done': True, 'date': ''}
-    ],
-    'user_name' : 'Admin',
-}
+def list_item_view(request, pk=1):
 
+    lists = ListItemModel.objects.filter(
+        listmodel_id=pk
+    ).order_by(
+        'created'
+    )
+    header = ListModel.objects.filter(
+        id=pk,
+    ).values_list(
+        'name',
+        flat=True
+    ).distinct()
 
-def list_item_view(request):
-    context = data
+    context = {
+        'lists': lists,
+        'header': header[0],
+
+    }
     return render(request, 'list.html', context)
 
 
