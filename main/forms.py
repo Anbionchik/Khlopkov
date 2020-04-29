@@ -6,8 +6,7 @@ class ListForm(forms.ModelForm):
     """
     Форма надстроек расписания обмена
     """
-    name = forms.CharField(widget=forms.TextInput())
-    user = forms.CharField(widget=forms.TextInput())
+    name = forms.CharField(required=True, widget=forms.TextInput())
 
     class Meta:
         model = ListModel

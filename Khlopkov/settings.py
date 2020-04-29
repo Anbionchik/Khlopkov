@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     "list_item",
     'main.templatetags',
     'registration',
-    'new_list',
 ]
 
 MIDDLEWARE = [
