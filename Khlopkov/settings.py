@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     "list_item",
-    'main.templatetags'
+    'main.templatetags',
+    'registration'
 ]
 
 MIDDLEWARE = [
@@ -120,6 +121,9 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# min elements at the main and list pages
+MIN_ELEMENTS = 6
 
 
 # Static files (CSS, JavaScript, Images)
