@@ -8,22 +8,26 @@ def list_item_view(request, pk):
 
     user = request.user
 
+    # Список со значениями для списка задач в шаблоне
+
     lists = ListItemModel.objects.filter(
         listmodel_id=pk
     ).order_by(
         'created'
     )
 
-    header = ListModel.objects.filter(
-        id=pk,
-    ).values_list(
+    # список из main.view
+
+    main_list = ListModel.objects.filter(id=pk)
+
+    header = main_list.values_list(
         'name',
         flat=True
     ).first()
 
-    user_verification = lists.values_list('listmodel_id__user_id__username', flat=True).first()
+    user_verification = main_list.values_list('user__username', flat=True).first()
 
-    if user_verification != str(user) and user_verification:
+    if user_verification != str(user):
         raise Http404
 
     context = {
