@@ -86,6 +86,7 @@ body {
 
 .auth__column_right_form__header {
   text-align: center;
+  grid-row-start: initial;
   grid-column: 1/4;
   grid-row: 1/2;
   font-family: Inter;

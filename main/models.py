@@ -1,4 +1,5 @@
 from django.db import models
+
 # from django.contrib.auth.models import User
 
 
@@ -15,3 +16,4 @@ class ListModel(models.Model):
 
     class Meta:
         verbose_name = 'Список дел'
+
