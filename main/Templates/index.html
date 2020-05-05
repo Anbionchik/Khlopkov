@@ -2,6 +2,7 @@
 {% load list_multiplier %}
 
 
+
 {% block title %}
     <title>Главная</title>
 {% endblock %}
@@ -29,7 +30,7 @@
                 </div>
                 <div class="buttons">
                     <div class="table-data-two_table-icon">
-                        <a href='#'>
+                        <a href='/edit/{{ list.id }}'>
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -61,9 +62,33 @@
             </div>
     {% endfor %}
 
-    {% if  lists|length < 6 %}
+    {% if  lists|length < min_elements %}
         {% for x in lists|list_multiplier  %}
              <div class="table-data__table-row"></div>
         {% endfor %}
+    {% endif %}
+
+    {% if pages.1 %}
+        <div class="table-data__table-row">
+            <div class="paginator_class">
+                <ul class="pagination-wrapper_button">
+                    {% if page_obj.has_previous %}
+                        <li><a class="inactive" href="?page=1">1</a></li>
+                        {% if page_obj.previous_page_number != 1 %}
+                            <li><a class="inactive" href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+                        {% endif %}
+                    {% endif %}
+
+                    <li><a class="active" href="/?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+
+                    {% if page_obj.has_next %}
+                        {% if page_obj.next_page_number != page_obj.paginator.num_pages %}
+                            <li><a class="inactive" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
+                        {% endif %}
+                        <li><a class="inactive" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
     {% endif %}
 {% endblock %}

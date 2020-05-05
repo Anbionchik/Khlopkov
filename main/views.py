@@ -1,8 +1,10 @@
 from main.models import ListModel
+from Khlopkov.settings import MIN_ELEMENTS, PAGE_COUNT
 from django.shortcuts import render, reverse, redirect
 from main.forms import ListForm
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 @login_required(login_url='registration/login/')
@@ -14,20 +16,57 @@ def main_view(request):
         lists = ListModel.objects.filter(
             user=user,
         ).order_by(
-            'created'
+            '-created'
         )
     except TypeError:
         lists = []
 
+    paginator = Paginator(lists, PAGE_COUNT)
+    page = request.GET.get('page')
+
+    try:
+        list_page = paginator.page(page)
+    except PageNotAnInteger:
+        list_page = paginator.page(1)
+    except EmptyPage:
+        list_page = paginator.page(paginator.num_pages)
+
     context = {
-        'lists': lists,
-        'user': request.user.username
+        'lists': list_page,
+        'user': request.user.username,
+        'pages': list(paginator.page_range),
+        'page_obj': paginator.get_page(page),
+        'min_elements': MIN_ELEMENTS
     }
     return render(request, 'index.html', context)
 
 
+def min_elements():
+    return MIN_ELEMENTS
+
+
 def edit_view(request, pk):
-    pass
+
+    obj = ListModel.objects.filter(id=pk).first()
+
+    if request.method == "POST":
+
+        name = request.POST.get('name')
+        user = request.user
+
+        form = ListForm({
+            'name': name,
+            'user': user
+        })
+
+        success_url = reverse('main:main')
+        if form.is_valid():
+            obj.name = form.cleaned_data['name']
+            obj.save()
+            return redirect(success_url)
+    else:
+        form = ListForm(instance=obj)
+    return render(request, "main_new_list.html", {'form': form})
 
 
 def new_list_view(request):
@@ -45,7 +84,7 @@ def new_list_view(request):
             form.save()
             return redirect(success_url)
 
-    return render(request, "new_list.html", {'form': form})
+    return render(request, "main_new_list.html", {'form': form})
 
 
 def logout_view(request):

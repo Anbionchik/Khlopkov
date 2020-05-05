@@ -16,3 +16,4 @@ class ListItemModel(models.Model):
 
     class Meta:
         verbose_name = 'Список задач'
+        unique_together = ('listmodel_id', 'name', 'expiration_date')

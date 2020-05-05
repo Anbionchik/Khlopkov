@@ -2,7 +2,6 @@ from django.urls import path
 from main.views import main_view, edit_view, new_list_view, logout_view
 from list_item.views import list_item_view
 
-
 app_name = 'main'
 
 urlpatterns = [
