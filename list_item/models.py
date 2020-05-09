@@ -11,6 +11,11 @@ class ListItemModel(models.Model):
     is_done = models.BooleanField(default=False)
     expiration_date = models.DateTimeField()
 
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+
+        super().save()
+
     def __str__(self):
         return self.name
 
