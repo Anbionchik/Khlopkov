@@ -119,7 +119,9 @@ def done_view(request):
 def all_done_view(request):
     data = json.loads(request.body.decode())
     pk = int(data['id'])
-    list_items = ListItemModel.objects.get(listmodel_id=pk)
-    list_items.is_done = True
-    list_items.save()
+    list_items = ListItemModel.objects.filter(listmodel_id=pk)
+    list_items.update(is_done=True)
+    main_list = ListModel.objects.get(id=pk)
+    main_list.is_done = True
+    main_list.save()
     return HttpResponse(status=201)
