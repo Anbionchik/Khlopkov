@@ -8,11 +8,14 @@
 
 {% block header %}
     <div class="table-data_table-header-item-1">{{ header }}</div>
-    <a class="add_new_list" href="{% url "list_item:new_list_item" pk=list_pk %}">
-        <div class="header__button-create-bundle">
-            <div class="plus_button">+</div>
-        </div>
-    </a>
+    <div class="item-buttons">
+        <div id="AllisDone_{{ list_pk }}" class="header__button-all-is-done">Всё сделано</div>
+        <a class="add_new_list" href="{% url "list_item:new_list_item" pk=list_pk %}">
+            <div class="header__button-create-bundle">
+                <div class="plus_button">+</div>
+            </div>
+    </a></div>
+
 {% endblock %}
 
 {% block body %}
@@ -34,7 +37,7 @@
                             </svg>
                         </a>
                     </div>
-                    {%  if list.expiration_date == '' %}
+                    {%  if list.expiration_date == None %}
                         <div class="calendarik">
                             <a href='#'>
                                 <img src="/static/images/calendar.png" alt="calendar" width="26px" height="24px">
@@ -116,7 +119,6 @@ function getCookie(name) {
 }
 
 function isDoneRequest(event) {
-    debugger
     const id = event.target.id.split('_').pop();
     const listId = document.location.href.split('/').pop();
     const url = document.location.href.replace(`/${listId}`, '/done/');
@@ -137,5 +139,32 @@ function isDoneRequest(event) {
         }
     })
 }
+
+const all_is_done_button = document.querySelector(".header__button-all-is-done")
+all_is_done_button.addEventListener("click", AllisDoneRequest)
+
+
+function AllisDoneRequest(event) {
+    const id = event.target.id.split('_').pop();
+    const listId = document.location.href.split('/').pop();
+    const url = document.location.href.replace(`/${listId}`, '/done/');
+    return fetch(url, {
+        method: 'POST',
+        headers: new Headers({'X-CSRFToken': token}),
+        redirect: 'follow',
+        body: JSON.stringify({id: id})
+    }).then(response => {
+        if (response.status === 201) {
+            if (event.target.classList.contains('is_done_text')) {
+                event.target.classList.remove('is_done_text');
+            } else {
+                event.target.classList.add('is_done_text');
+            }
+        } else {
+            alert('Сервер не доступен');
+        }
+    })
+}
+
 </script>
 {% endblock %}
