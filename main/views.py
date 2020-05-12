@@ -2,8 +2,10 @@ from main.models import ListModel
 from django.shortcuts import render, reverse, redirect
 from main.forms import ListForm
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url='registration/login/')
 def main_view(request):
     """ Главная View """
     user = request.user
