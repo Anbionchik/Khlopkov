@@ -124,6 +124,7 @@ USE_TZ = True
 
 # min elements at the main and list pages
 MIN_ELEMENTS = 6
+PAGE_COUNT = 6
 
 
 # Static files (CSS, JavaScript, Images)

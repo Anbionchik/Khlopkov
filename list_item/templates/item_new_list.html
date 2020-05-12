@@ -1,0 +1,27 @@
+{% extends 'master_new_list.html' %}
+
+{% block form %}
+  <div class="auth__column_right_form__header">Создание нового списка</div>
+  <form class="auth_form_class" action="" id="auth_form" method="POST">
+      {% csrf_token %}
+      <p class="form_class_name-field"> Наименование нового списка</p>
+      {{ form.name }}
+      {{ form.expiration_date }}
+      {% if form.non_field_errors %}
+          {% for error in form.non_field_errors %}
+            {{ error }}
+          {% endfor %}
+      {% endif %}
+  </form>
+  <div class="auth__column_right__form_footer">
+    <label class="form_footer_button-submit">
+      <input type="submit" form="auth_form" value="" style="display: none">
+      <div class="auth__button_submit" id="login-submit-btn" ><span>&#10004</span></div>
+    </label>
+    <label class="form_footer_button-cancel">
+        <a href={% url "main:list" pk=primary_key%}>
+            <div class="auth__button_submit" id="login-cancel-btn" ><span>&#9587</span></div>
+        </a>
+    </label>
+  </div>
+{% endblock %}

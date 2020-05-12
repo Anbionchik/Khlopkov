@@ -6,13 +6,18 @@ from django.contrib.auth.models import User
 class CustomUserForm(UserCreationForm):
     """ Форма регистрации нового пользователя """
 
-    error_messages = {
-        'password_mismatch': "Введены не совпадающие пароли"
-    }
-
     class Meta(UserCreationForm.Meta):
         model = User
         fields = UserCreationForm.Meta.fields + ('email',)
+        error_messages = {
+            'username': {
+                'unique_together': 'Пользователь с таким именем уже существует...',
+                'unique': 'Пользователь с таким именем уже существует...'
+            },
+            'password2': {
+                'password_mismatch': 'Пароли не совпадают!'
+            }
+        }
 
 
 class LoginForm(forms.Form):
