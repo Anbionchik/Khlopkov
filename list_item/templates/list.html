@@ -121,7 +121,10 @@ function getCookie(name) {
 function isDoneRequest(event) {
     debugger
     const id = event.target.id.split('_').pop();
-    const listId = document.location.href.split('/').pop();
+    let listId = document.location.href.split('/').pop();
+    if (listId.includes('?')) {
+        listId = listId.split('?')[0]
+    }
     const url = document.location.href.replace(`/${listId}`, '/done/');
     return fetch(url, {
         method: 'POST',

@@ -1,6 +1,5 @@
 from django.db import models
 from main.models import ListModel
-# from django.contrib.auth.models import User
 
 
 class ListItemModel(models.Model):
@@ -14,9 +13,12 @@ class ListItemModel(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
+        obj = ListModel.objects.filter(id=self.listmodel_id_id).first()
         if all(type(self).objects.filter(listmodel_id=self.listmodel_id).values_list('is_done', flat=True)):
-            obj = ListModel.objects.filter(id=self.listmodel_id_id).first()
             obj.is_done = True
+            obj.save()
+        else:
+            obj.is_done = False
             obj.save()
 
     def __str__(self):
