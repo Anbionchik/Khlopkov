@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect, reverse
 from main.models import ListModel
 from list_item.models import ListItemModel
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from list_item.forms import ListItemForm
 from django.contrib.auth.decorators import login_required
 from Khlopkov.settings import MIN_ELEMENTS, PAGE_COUNT
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import json
 
 
-@login_required(login_url='')
+@login_required(login_url='/')
 def list_item_view(request, pk):
 
     user = request.user
@@ -105,3 +106,42 @@ def edit_view(request, pk):
     return render(request, "item_new_list.html", {'form': form, 'primary_key': back_address})
 
 
+def done_view(request):
+    data = json.loads(request.body.decode())
+    pk = int(data['id'])
+    list_item = ListItemModel.objects.get(id=pk)
+    value = not list_item.is_done
+    list_item.is_done = value
+    list_item.save()
+    return HttpResponse(status=201)
+
+
+def all_done_view(request):
+    data = json.loads(request.body.decode())
+    pk = int(data['id'])
+    list_items = ListItemModel.objects.filter(listmodel_id=pk)
+    list_items.update(is_done=True)
+    main_list = ListModel.objects.get(id=pk)
+    main_list.is_done = True
+    main_list.save()
+    return HttpResponse(status=201)
+
+
+def delete_item_view(request, pk):
+    if request.method == 'POST':
+        list_item = ListItemModel.objects.filter(id=pk).first()
+        if list_item:
+            list_item.delete()
+            return HttpResponse(status=201)
+    return Http404
+
+
+def delete_all(request):
+    if request.method == 'POST':
+        data = json.loads(request.body.decode())
+        pk = int(data['id'])
+        list_items = ListItemModel.objects.filter(listmodel_id=pk)
+        if list_items:
+            list_items.delete()
+            return HttpResponse(status=201)
+    return Http404
