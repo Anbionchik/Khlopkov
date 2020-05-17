@@ -125,3 +125,23 @@ def all_done_view(request):
     main_list.is_done = True
     main_list.save()
     return HttpResponse(status=201)
+
+
+def delete_item_view(request, pk):
+    if request.method == 'POST':
+        list_item = ListItemModel.objects.filter(id=pk).first()
+        if list_item:
+            list_item.delete()
+            return HttpResponse(status=201)
+    return Http404
+
+
+def delete_all(request):
+    if request.method == 'POST':
+        data = json.loads(request.body.decode())
+        pk = int(data['id'])
+        list_items = ListItemModel.objects.filter(listmodel_id=pk)
+        if list_items:
+            list_items.delete()
+            return HttpResponse(status=201)
+    return Http404
