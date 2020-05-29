@@ -103,7 +103,7 @@
 {% block js %}
 <script>
 
-const rows = document.querySelectorAll('.table-row_table_cell-1');
+const rows = Array.from(document.querySelectorAll('.table-row_table_cell-1')).filter(row => row.id);
 const body = document.getElementsByClassName('relationship__table-data')[0];
 const delButtons = document.querySelectorAll('.delete_button');
 const listId = JSON.parse('{{ list_pk|safe }}');
@@ -242,18 +242,24 @@ all_is_done_button.addEventListener("click", AllisDoneRequest);
 function AllisDoneRequest(event) {
     debugger
     const url = document.location.href.replace(`/${listId}`, '/all_done/');
+    const isDone = rows.map(row => row.classList.contains('is_done_text'));
+    let allTrue = ! (isDone.filter(row => !row).length > 0);
+
     return fetch(url, {
         method: 'POST',
         headers: new Headers({'X-CSRFToken': token}),
         redirect: 'follow',
-        body: JSON.stringify({id: listId})
+        body: JSON.stringify({id: listId, all_true: allTrue})
     }).then(response => {
         if (response.status === 201) {
-            let i;
-            for (i = 0; i < rows.length; i++) {
-                if (!rows[i].classList.contains('is_done_text')) {
-                    rows[i].classList.add('is_done_text');
-                }
+            if (allTrue) {
+                rows.forEach(row => row.classList.remove('is_done_text'));
+            } else {
+                rows.forEach(row => {
+                    if (!row.classList.contains('is_done_text')) {
+                        row.classList.add('is_done_text');
+                    }
+                })
             }
         } else {
             alert('Сервер не доступен');
